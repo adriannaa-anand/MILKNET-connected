@@ -1,0 +1,16 @@
+.milkman-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px 20px;cursor:pointer;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;box-shadow:var(--shadow)}
+.milkman-card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(44,26,14,.13)}
+.milkman-card--off{opacity:.65}
+.milkman-card__badge{position:absolute;top:12px;right:12px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.milkman-card__badge--leave{background:#F5EDE0;color:var(--muted)}
+.milkman-card__top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.milkman-card__avatar{width:52px;height:52px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex-shrink:0;position:relative}
+.milkman-card__dot{position:absolute;bottom:-2px;right:-2px;width:13px;height:13px;border-radius:50%;border:2px solid #fff}
+.milkman-card__name{font-weight:700;font-size:16px;color:var(--text);margin:0 0 3px}
+.milkman-card__area{font-size:13px;color:var(--muted);margin:0}
+.milkman-card__types{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.milkman-card__type{background:#F5EDE0;color:var(--text2);font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
+.milkman-card__stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.milkman-card__stat{background:var(--bg);border-radius:8px;padding:7px 10px;font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:6px}
+.milkman-card__footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid #F5EDE0}
+.milkman-card__cta{font-weight:700;color:var(--red);font-size:13px}

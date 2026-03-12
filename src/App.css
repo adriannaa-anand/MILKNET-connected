@@ -1,0 +1,2 @@
+/* App-level wrapper */
+.app-wrapper { min-height: 100vh; background: var(--bg); }

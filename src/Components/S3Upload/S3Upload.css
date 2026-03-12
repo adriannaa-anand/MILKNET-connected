@@ -1,0 +1,17 @@
+.s3upload{background:#F0F8FF;border:1.5px dashed #7BB8DC;border-radius:var(--r-lg);padding:24px;text-align:center}
+.s3upload__head{display:flex;align-items:flex-start;gap:12px;text-align:left;margin-bottom:18px}
+.s3upload__title{font-weight:700;color:var(--blue);font-size:15px;margin:0 0 4px}
+.s3upload__sub{font-size:13px;color:#4A7FA5;margin:0}
+.s3upload__label{display:inline-block;background:var(--blue);color:#fff;border-radius:10px;padding:11px 24px;cursor:pointer;font-weight:700;font-size:14px;transition:background .15s}
+.s3upload__label:hover:not(.s3upload__label--busy){background:#0E4DA4}
+.s3upload__label--busy{opacity:.75;cursor:not-allowed}
+.s3upload__inp{display:none}
+.s3upload__bar-wrap{margin-top:14px;background:#C3DFF5;border-radius:4px;height:6px;overflow:hidden}
+.s3upload__bar{height:100%;background:var(--blue);border-radius:4px;transition:width .1s linear}
+.s3upload__bar-txt{font-size:11px;color:#4A7FA5;margin-top:6px;font-family:monospace;text-align:left}
+.s3upload__error{color:var(--red);font-size:13px;margin-top:10px}
+.s3upload__success{background:#E8F5E9;border:1px solid var(--green);border-radius:10px;padding:16px}
+.s3upload__success p{font-weight:700;color:var(--green);margin:0 0 6px}
+.s3upload__success code{font-size:11px;color:#4A7FA5;word-break:break-all;display:block}
+.s3upload__success button{margin-top:10px;background:none;border:1px solid var(--green);border-radius:8px;padding:6px 14px;cursor:pointer;color:var(--green);font-size:13px}
+.s3upload__badges{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:14px;font-size:12px;color:#7AAFC7}
