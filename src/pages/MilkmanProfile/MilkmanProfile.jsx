@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext.jsx'
 import api from '../../utils/api'
-import S3Upload from '../../Components/S3Upload/S3Upload.jsx'
 import './MilkmanProfile.css'
 
 const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
 const TABS  = [
-  { id:'about',     label:'📋 About'    },
-  { id:'schedule',  label:'📅 Schedule' },
-  { id:'reviews',   label:'⭐ Reviews'  },
-  { id:'documents', label:'☁️ S3 Docs' },
+  { id:'about',    label:'📋 About'    },
+  { id:'schedule', label:'📅 Schedule' },
+  { id:'reviews',  label:'⭐ Reviews'  },
 ]
 
 export default function MilkmanProfile({ navigate, milkman: propMilkman }) {
@@ -102,9 +100,6 @@ export default function MilkmanProfile({ navigate, milkman: propMilkman }) {
   const rating = m.reviewSummary?.averageRating || 0
   const revCnt = m.reviewSummary?.reviewCount   || reviews.length
 
-  // Gather documents: from backend milkman.documents[] or legacy s3Docs
-  const docs = m.documents || m.s3Docs || []
-
   return (
     <div className="page mmp fade-up">
       <button className="mmp__back" onClick={() => navigate('milkmen')}>← Back to Milkmen</button>
@@ -126,7 +121,6 @@ export default function MilkmanProfile({ navigate, milkman: propMilkman }) {
             <div className="mmp__name-row">
               <h1 className="mmp__name">{m.name}</h1>
               {m.badge && <span className="mmp__badge" style={{ background:`${m.color||'#E8A838'}18`, color:m.color||'#E8A838' }}>{m.badge}</span>}
-              <span className="mmp__badge mmp__badge--s3">☁️ AWS S3 Verified</span>
             </div>
             <p className="mmp__meta">📍 {m.area} · {m.experience || 'Experienced'} · Since {m.joinedYear || m.joined}</p>
             <div className="mmp__quick">
@@ -271,36 +265,6 @@ export default function MilkmanProfile({ navigate, milkman: propMilkman }) {
                 <p className="mmp__rev-comment">{r.comment}</p>
               </div>
             ))}
-          </div>
-        )}
-
-        {/* Documents tab */}
-        {tab === 'documents' && (
-          <div>
-            <h3 className="mmp__ct">AWS S3 Documents</h3>
-            <p className="mmp__docs-sub">All documents stored securely in Amazon S3 with restricted access.</p>
-            {docs.length === 0 && <p style={{ color:'var(--muted)', margin:'16px 0' }}>No documents uploaded yet.</p>}
-            <div className="mmp__docs">
-              {docs.map((doc, i) => (
-                <div key={doc._id || i} className="mmp__doc">
-                  <div className="mmp__doc-icon">{doc.icon || '📄'}</div>
-                  <div style={{ flex:1 }}>
-                    <p className="mmp__doc-name">{doc.name}</p>
-                    <code className="mmp__doc-key">
-                      {doc.s3Key ? `s3://${import.meta.env.VITE_AWS_S3_BUCKET || 'milknet-docs'}/${doc.s3Key}` : doc.key || ''}
-                    </code>
-                    <p className="mmp__doc-meta">{doc.fileSize || doc.size} · {doc.uploadedAt ? new Date(doc.uploadedAt).toLocaleDateString('en-IN') : doc.date}</p>
-                  </div>
-                  <span className="mmp__doc-badge">☁️ Verified</span>
-                </div>
-              ))}
-            </div>
-            {/* Only the milkman themselves can upload documents */}
-            {user?.role === 'milkman' && (
-              <div style={{ marginTop:28 }}>
-                <S3Upload folder="milkmen" onUploaded={() => window.location.reload()} />
-              </div>
-            )}
           </div>
         )}
       </div>

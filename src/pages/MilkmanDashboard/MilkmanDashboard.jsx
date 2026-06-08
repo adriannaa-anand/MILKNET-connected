@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext.jsx'
 import api from '../../utils/api'
-import S3Upload from '../../Components/S3Upload/S3Upload.jsx'
 import './MilkmanDashboard.css'
 
 const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
@@ -13,6 +12,7 @@ export default function MilkmanDashboard({ navigate }) {
   const [profile,    setProfile]    = useState(null)
   const [subscribers,setSubscribers]= useState([])
   const [payments,   setPayments]   = useState([])
+  const [reviews,    setReviews]    = useState([])
   const [loading,    setLoading]    = useState(true)
   const [saving,     setSaving]     = useState(false)
   const [saved,      setSaved]      = useState(false)
@@ -47,6 +47,14 @@ export default function MilkmanDashboard({ navigate }) {
         setAvailable(p.available ?? true)
         setSubscribers(subRes.data.subscribers || [])
         setPayments(payRes.data.payments || [])
+
+        // Fetch reviews for this milkman
+        if (p._id) {
+          try {
+            const revRes = await api.get(`/reviews/${p._id}?limit=50`)
+            setReviews(revRes.data.reviews || [])
+          } catch (_) { /* reviews are non-critical */ }
+        }
       } catch (err) {
         setError('Failed to load dashboard. Is the backend running?')
       } finally {
@@ -100,8 +108,6 @@ export default function MilkmanDashboard({ navigate }) {
     { icon:'📦', label:'Total Deliveries',  value: String(payments.length),                                          sub:'All time',            color:'#E8764A' },
   ]
 
-  // Document verification status
-  const hasDocs  = (profile?.documents?.length || 0) > 0
   const hasArea  = !!area
   const hasPrice = !!price
 
@@ -137,7 +143,7 @@ export default function MilkmanDashboard({ navigate }) {
       </div>
 
       {/* Setup banner if profile incomplete */}
-      {(!hasArea || !hasPrice || !hasDocs) && (
+      {(!hasArea || !hasPrice) && (
         <div className="mdb__setup-banner">
           <span>🚀</span>
           <div>
@@ -145,7 +151,6 @@ export default function MilkmanDashboard({ navigate }) {
             <p className="mdb__setup-sub">
               {!hasArea  && '📍 Add delivery area  '}
               {!hasPrice && '💰 Set your price  '}
-              {!hasDocs  && '📄 Upload documents'}
             </p>
           </div>
         </div>
@@ -214,10 +219,9 @@ export default function MilkmanDashboard({ navigate }) {
           <div className="card mdb__status-card">
             <h3 className="mdb__section-title">Account Status</h3>
             {[
-              ['📍 Delivery Area Set',      hasArea,  hasArea  ? 'Done'    : 'Missing'],
-              ['💰 Price Configured',       hasPrice, hasPrice ? 'Done'    : 'Missing'],
-              ['📄 Documents Uploaded',     hasDocs,  hasDocs  ? 'Done'    : 'Pending'],
-              ['🟢 Visible in Search',      hasArea && hasPrice && hasDocs, hasArea && hasPrice && hasDocs ? 'Active' : 'Incomplete'],
+              ['📍 Delivery Area Set',  hasArea,               hasArea               ? 'Done'       : 'Missing'],
+              ['💰 Price Configured',   hasPrice,              hasPrice              ? 'Done'       : 'Missing'],
+              ['🟢 Visible in Search',  hasArea && hasPrice,   hasArea && hasPrice   ? 'Active'     : 'Incomplete'],
             ].map(([label, done, text]) => (
               <div key={label} className="mdb__status-row">
                 <span>{label}</span>
@@ -246,14 +250,60 @@ export default function MilkmanDashboard({ navigate }) {
             </div>
           )}
 
-          {/* Document upload */}
-          <div className="card">
-            <h3 className="mdb__section-title" style={{ marginBottom:14 }}>Upload Verification Docs</h3>
-            <p className="mdb__docs-note">Upload your Aadhaar, FSSAI license, or farm photos. Stored securely on AWS S3.</p>
-            <S3Upload folder="milkmen" onUploaded={() => window.location.reload()} />
-          </div>
-
         </div>
+      </div>
+
+      {/* Customer Reviews */}
+      <div className="card" style={{ marginBottom: 22 }}>
+        <h3 className="mdb__section-title">
+          ⭐ Customer Reviews
+          {reviews.length > 0 && (
+            <span style={{ fontSize:14, fontWeight:500, color:'var(--muted)', marginLeft:10 }}>
+              ({reviews.length} · avg {profile?.reviewSummary?.averageRating || '—'})
+            </span>
+          )}
+        </h3>
+
+        {reviews.length === 0 ? (
+          <p style={{ color:'var(--muted)', fontSize:14, textAlign:'center', padding:'20px 0', margin:0 }}>
+            No reviews yet. Reviews from your customers will appear here.
+          </p>
+        ) : (
+          <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
+            {reviews.map(r => (
+              <div key={r._id} style={{ borderBottom:'1px solid #F5EDE0', paddingBottom:16 }}>
+                <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:6 }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+                    <div style={{
+                      width:34, height:34, borderRadius:'50%',
+                      background:'#FFF3E0', display:'flex', alignItems:'center',
+                      justifyContent:'center', fontWeight:700, color:'var(--orange)',
+                      fontSize:14, flexShrink:0,
+                    }}>
+                      {r.customer?.name?.[0] || '?'}
+                    </div>
+                    <div>
+                      <p style={{ margin:0, fontWeight:600, fontSize:14, color:'var(--text)' }}>
+                        {r.customer?.name || 'Customer'}
+                      </p>
+                      <p style={{ margin:0, fontSize:12, color:'var(--muted)' }}>
+                        {new Date(r.createdAt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' })}
+                      </p>
+                    </div>
+                  </div>
+                  <span style={{ color:'var(--orange)', fontSize:18, letterSpacing:2 }}>
+                    {'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}
+                  </span>
+                </div>
+                {r.comment && (
+                  <p style={{ margin:'6px 0 0 44px', fontSize:14, color:'var(--text2)', lineHeight:1.5 }}>
+                    {r.comment}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Quick links */}
