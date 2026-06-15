@@ -4,7 +4,6 @@ import './Landing.css'
 
 const FEATURES = [
   { icon:'📍', title:'Discover Local Milkmen',  desc:'Find verified milkmen in your area. Compare prices, ratings, and delivery times.' },
-  { icon:'☁️', title:'AWS S3 Verification',     desc:'Every milkman uploads ID and farm photos to AWS S3. Verify before subscribing.' },
   { icon:'₹',  title:'Pay via Razorpay',        desc:'Pay monthly subscriptions via UPI, cards, or net banking through Razorpay.' },
   { icon:'📊', title:'Expense Dashboard',       desc:'Track monthly milk spend with charts. Know exactly what you owe.' },
   { icon:'🔔', title:'Smart Reminders',         desc:'Get notified before payments are due. Never miss a payment again.' },

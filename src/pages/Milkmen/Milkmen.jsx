@@ -45,9 +45,9 @@ export default function Milkmen({ navigate }) {
 
       <div className="card milkmen__bar">
         <div className="milkmen__search-wrap">
-          <span className="milkmen__search-icon">🔍</span>
+          <span className="milkmen__search-icon">📍</span>
           <input value={search} onChange={e => setSearch(e.target.value)}
-            placeholder="Search by name, area, or milk type…" className="milkmen__search" />
+            placeholder="Search by area, name, or milk type… e.g. Koramangala" className="milkmen__search" />
           {search && (
             <button onClick={() => setSearch('')} style={{ background:'none', border:'none', cursor:'pointer', color:'var(--muted)', fontSize:18 }}>✕</button>
           )}
@@ -66,11 +66,6 @@ export default function Milkmen({ navigate }) {
         </select>
       </div>
 
-      <div className="milkmen__s3-banner">
-        <span>☁️</span>
-        <p><strong>AWS S3 Verified</strong> — All milkman ID proofs and farm photos stored securely on Amazon S3.</p>
-      </div>
-
       {error && <div className="milkmen__error">⚠️ {error}</div>}
 
       {loading ? (
@@ -80,7 +75,11 @@ export default function Milkmen({ navigate }) {
         </div>
       ) : (
         <>
-          <p className="milkmen__count">{milkmen.length} milkmen found</p>
+          <p className="milkmen__count">
+            {search
+              ? `${milkmen.length} milkman${milkmen.length !== 1 ? 'men' : ''} found in "${search}"`
+              : `${milkmen.length} milkmen available`}
+          </p>
           {milkmen.length > 0 ? (
             <div className="milkmen__grid">
               {milkmen.map(m => (
@@ -90,8 +89,9 @@ export default function Milkmen({ navigate }) {
           ) : (
             <div className="milkmen__empty">
               <p style={{ fontSize:48 }}>🔍</p>
-              <p className="milkmen__empty-title">No milkmen found</p>
-              <p>Try a different search or filter</p>
+              <p className="milkmen__empty-title">No milkmen found{search ? ` in "${search}"` : ''}</p>
+              <p>{search ? 'Try a nearby area or check the spelling' : 'Try a different filter'}</p>
+              {search && <button onClick={() => setSearch('')} style={{ marginTop:12, padding:'8px 20px', borderRadius:20, border:'1.5px solid var(--orange)', background:'none', color:'var(--orange)', cursor:'pointer', fontWeight:600 }}>Clear Search</button>}
             </div>
           )}
         </>
