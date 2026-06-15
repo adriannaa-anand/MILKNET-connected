@@ -68,14 +68,6 @@ npm run build
 
 ---
 
-## ☁️ AWS S3 Setup
-
-- Upload flow uses presigned URLs (keeps AWS keys server-side)
-- Set bucket name and region in `.env`
-- In production, remove the `simulateS3Upload` call in `S3Upload.jsx` and use `uploadToS3`
-
----
-
 ## ₹ Razorpay Setup
 
 - Add your Razorpay Key ID to `.env`
