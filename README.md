@@ -19,48 +19,50 @@ payments, and automated cloud deployment.
 **Hosting:** Vercel (Frontend) · Render (Backend)  
 
 ---
+## 💡 What Makes MilkNet Different
 
-💡 What Makes MilkNet Different
+Most delivery apps are marketplaces for big vendors. MilkNet is built specifically for **individual local milkmen** — the kind who deliver to your door every morning.
 
-Most delivery apps are marketplaces for big vendors. MilkNet is built specifically for individual local milkmen — the kind who deliver to your door every morning.
-
-ProblemHow MilkNet Solves ItNo digital presence for local milkmenMilkmen get a profile with area, price, schedule, milk typesCustomers don't know who delivers in their areaSearch and filter by area, price, ratingCash-only payments cause tracking issuesRazorpay integration — UPI, card, netbankingNo subscription trackingMonthly expense dashboard with chartsFake or incomplete listingsMilkmen only appear in search after completing their profile.
+| Problem | How MilkNet Solves It |
+|---|---|
+| No digital presence for local milkmen | Milkmen get a profile with area, price, schedule, milk types |
+| Customers don't know who delivers in their area | Search and filter by area, price, rating |
+| Cash-only payments cause tracking issues | Razorpay integration — UPI, card, netbanking |
+| No subscription tracking | Monthly expense dashboard with charts |
+| Fake or incomplete listings | Milkmen only appear in search **after** completing their profile |
 
 ---
-🔐 Dual Role System
+
+## 🔐 Dual Role System
 
 The app works completely differently depending on who logs in:
 
-As a Customer:
+**As a Customer:**
+- Browse and search milkmen by area
+- View ratings, reviews, delivery schedule
+- Subscribe to a milkman for daily delivery
+- Pay monthly via Razorpay
+- Track expenses with monthly charts
+- Toggle auto-pay on/off
 
+**As a Milkman:**
+- Set up delivery area, price per litre, milk types
+- Set delivery days and time window
+- Toggle availability (on leave / accepting customers)
+- View active subscribers and earnings
+- Profile only visible to customers after setup is complete
 
-Browse and search milkmen by area
-View ratings, reviews, delivery schedule
-Subscribe to a milkman for daily delivery
-Pay monthly via Razorpay
-Track expenses with monthly charts
-Toggle auto-pay on/off
-
-
-As a Milkman:
-
-
-Set up delivery area, price per litre, milk types
-Set delivery days and time window
-Toggle availability (on leave / accepting customers)
-View active subscribers and earnings
-Profile only visible to customers after setup is complete
 ---
-✨ Key Features
 
+## ✨ Key Features
 
-🔐 JWT Role-based Auth — same login page, completely different experience for Customer vs Milkman
-🔍 Smart Search — filter by area, availability, price; sort by rating or reviews
-📅 Subscription Model — daily recurring delivery, not one-time orders
-💳 Razorpay Integration — real HMAC signature verification, not just a UI demo
-📊 Expense Dashboard — monthly bar charts, payment history, due reminders
-⭐ Review System — one review per customer per milkman, auto-updates average rating
-🔔 Payment Reminders — banner notification for pending payments
+- 🔐 **JWT Role-based Auth** — same login page, completely different experience for Customer vs Milkman
+- 🔍 **Smart Search** — filter by area, availability, price; sort by rating or reviews
+- 📅 **Subscription Model** — daily recurring delivery, not one-time orders
+- 💳 **Razorpay Integration** — real HMAC signature verification, not just a UI demo
+- 📊 **Expense Dashboard** — monthly bar charts, payment history, due reminders
+- ⭐ **Review System** — one review per customer per milkman, auto-updates average rating
+- 🔔 **Payment Reminders** — banner notification for pending payments
 ---
 
 ## 🚀 CI/CD Pipeline
