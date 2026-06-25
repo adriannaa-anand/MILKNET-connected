@@ -20,16 +20,47 @@ payments, and automated cloud deployment.
 
 ---
 
-## ✨ Features
+💡 What Makes MilkNet Different
 
-- 🔐 JWT authentication with role-based access (Customer / Milkman)
-- 🥛 Browse and search local milkmen by area, price, rating
-- 📅 Subscribe to a milkman for daily delivery
-- 💳 Pay monthly subscriptions via Razorpay (UPI / Card / NetBanking)
-- 📊 Expense dashboard with monthly charts
-- ⭐ Review and rating system
-- 🧑‍🌾 Milkman dashboard to manage profile, schedule, availability
+Most delivery apps are marketplaces for big vendors. MilkNet is built specifically for individual local milkmen — the kind who deliver to your door every morning.
 
+ProblemHow MilkNet Solves ItNo digital presence for local milkmenMilkmen get a profile with area, price, schedule, milk typesCustomers don't know who delivers in their areaSearch and filter by area, price, ratingCash-only payments cause tracking issuesRazorpay integration — UPI, card, netbankingNo subscription trackingMonthly expense dashboard with chartsFake or incomplete listingsMilkmen only appear in search after completing their profile.
+
+---
+🔐 Dual Role System
+
+The app works completely differently depending on who logs in:
+
+As a Customer:
+
+
+Browse and search milkmen by area
+View ratings, reviews, delivery schedule
+Subscribe to a milkman for daily delivery
+Pay monthly via Razorpay
+Track expenses with monthly charts
+Toggle auto-pay on/off
+
+
+As a Milkman:
+
+
+Set up delivery area, price per litre, milk types
+Set delivery days and time window
+Toggle availability (on leave / accepting customers)
+View active subscribers and earnings
+Profile only visible to customers after setup is complete
+---
+✨ Key Features
+
+
+🔐 JWT Role-based Auth — same login page, completely different experience for Customer vs Milkman
+🔍 Smart Search — filter by area, availability, price; sort by rating or reviews
+📅 Subscription Model — daily recurring delivery, not one-time orders
+💳 Razorpay Integration — real HMAC signature verification, not just a UI demo
+📊 Expense Dashboard — monthly bar charts, payment history, due reminders
+⭐ Review System — one review per customer per milkman, auto-updates average rating
+🔔 Payment Reminders — banner notification for pending payments
 ---
 
 ## 🚀 CI/CD Pipeline
